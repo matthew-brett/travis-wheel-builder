@@ -8,21 +8,32 @@ python:
     - 3.3
     - 3.4
 install:
+    - if [ "${TRAVIS_PYTHON_VERSION:0:1}" == 2 ]; then
+        NUMPY_VERSION=1.5.1;
+      else
+        NUMPY_VERSION=1.7.1;
+      fi
     - WHEELHOUSE=$PWD/wheelhouse
+    - pip install wheel
     - pip wheel -w $WHEELHOUSE cython
+    # Install Cython for builds
+    - pip install -f $WHEELHOUSE cython
+    # numpy, scipy dependencies
+    - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base gfortran
+    # Build required numpy version
+    - pip wheel -w $WHEELHOUSE numpy==$NUMPY_VERSION
+    # Install numpy for building other wheels against
+    - pip install -f $WHEELHOUSE numpy==$NUMPY_VERSION
     # matplotlib dependencies
     - sudo apt-get install libpng-dev libfreetype6-dev
-    - pip install wheel
     - pip wheel -w $WHEELHOUSE matplotlib
-    # scipy dependencies
-    - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base gfortran
     # scipy needs -v flag otherwise travis times out for lack of output
     - pip wheel -w $WHEELHOUSE -v scipy
     # Pillow
     - sudo apt-get install libtiff4-dev libwebp-dev
     - pip wheel -w $WHEELHOUSE -v pillow
 script:
-    - pip install -f $WHEELHOUSE cython scipy matplotlib pillow
+    - pip install -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow
 before_deploy: cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
