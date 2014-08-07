@@ -32,8 +32,10 @@ install:
     # Pillow
     - sudo apt-get install libtiff4-dev libwebp-dev
     - pip wheel -w $WHEELHOUSE -v pillow
+    # Networkx
+    - pip wheel -w $WHEELHOUSE -v networkx
 script:
-    - pip install -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow
+    - pip install -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow networkx
 before_deploy: cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
