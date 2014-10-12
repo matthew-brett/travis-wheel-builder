@@ -34,6 +34,8 @@ install:
     - pip wheel -w $WHEELHOUSE -v pillow
     # Networkx
     - pip wheel -w $WHEELHOUSE -v networkx
+    # Tifffile
+    - pip wheel -w $WHEELHOUSE -v tifffile
 script:
     - pip install -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow networkx
 before_deploy: cd $WHEELHOUSE
