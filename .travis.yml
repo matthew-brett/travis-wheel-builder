@@ -42,7 +42,7 @@ install:
     # Tifffile
     - pip wheel -w $WHEELHOUSE -v tifffile
 script:
-    - pip install -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow networkx tifffile
+    - pip install --no-index -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow networkx tifffile
 before_deploy: cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
