@@ -27,7 +27,11 @@ install:
     - pip install -f $WHEELHOUSE numpy==$NUMPY_VERSION
     # matplotlib dependencies
     - sudo apt-get install libpng-dev libfreetype6-dev
-    - pip wheel -w $WHEELHOUSE matplotlib
+    - if [[ $TRAVIS_PYTHON_VERSION == 3.2 ]]; then
+        pip wheel -w $WHEELHOUSE matplotlib==1.3.1;
+      else
+        pip wheel -w $WHEELHOUSE matplotlib;
+      fi
     # scipy needs -v flag otherwise travis times out for lack of output
     - pip wheel -w $WHEELHOUSE -v scipy
     # Pillow
