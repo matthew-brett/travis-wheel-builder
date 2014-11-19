@@ -3,7 +3,8 @@
 language: python
 env:
     global:
-       - TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py"
+       # TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py"
+       - TO_BUILD=h5py
 python:
     - 2.6
     - 2.7
