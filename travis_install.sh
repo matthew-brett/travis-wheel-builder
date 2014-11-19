@@ -47,7 +47,7 @@ function build_tifffile {
 }
 
 function build_h5py {
-    sudo apt-get install libhdf5-openmpi-dev
+    sudo apt-get install libhdf5-serial-dev
     $PIPI cython numpy
     $PIPW h5py
 }
