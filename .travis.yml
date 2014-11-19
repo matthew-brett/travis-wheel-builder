@@ -1,6 +1,9 @@
 # vim ft=yaml
 # Build some standard python wheels for the travis worker
 language: python
+env:
+    global:
+       - TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py"
 python:
     - 2.6
     - 2.7
@@ -8,41 +11,16 @@ python:
     - 3.3
     - 3.4
 install:
+    - WHEELHOUSE=$PWD/wheelhouse
     - if [ "${TRAVIS_PYTHON_VERSION:0:1}" == 2 ]; then
         NUMPY_VERSION=1.6.0;
       else
         NUMPY_VERSION=1.7.1;
       fi
-    - WHEELHOUSE=$PWD/wheelhouse
-    - pip install wheel
-    - pip wheel -w $WHEELHOUSE cython
+    - source travis_install.sh
     - pip wheel -w $WHEELHOUSE https://github.com/cython/cython/archive/0.19.2.tar.gz
-    # Install Cython for builds
-    - pip install -f $WHEELHOUSE cython
-    # numpy, scipy dependencies
-    - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base gfortran
-    # Build required numpy version
-    - pip wheel -w $WHEELHOUSE numpy==$NUMPY_VERSION
-    # Install numpy for building other wheels against
-    - pip install -f $WHEELHOUSE numpy==$NUMPY_VERSION
-    # matplotlib dependencies
-    - sudo apt-get install libpng-dev libfreetype6-dev
-    - if [[ $TRAVIS_PYTHON_VERSION == 3.2 ]]; then
-        pip wheel -w $WHEELHOUSE matplotlib==1.3.1;
-      else
-        pip wheel -w $WHEELHOUSE matplotlib;
-      fi
-    # scipy needs -v flag otherwise travis times out for lack of output
-    - pip wheel -w $WHEELHOUSE -v scipy
-    # Pillow
-    - sudo apt-get install libtiff4-dev libwebp-dev
-    - pip wheel -w $WHEELHOUSE -v pillow
-    # Networkx
-    - pip wheel -w $WHEELHOUSE -v networkx
-    # Tifffile
-    - pip wheel -w $WHEELHOUSE -v tifffile
 script:
-    - pip install --no-index -f $WHEELHOUSE cython numpy==$NUMPY_VERSION scipy matplotlib pillow networkx tifffile
+    - pip install --no-index -f $WHEELHOUSE $TO_BUILD
 before_deploy: cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
