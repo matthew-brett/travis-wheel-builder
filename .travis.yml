@@ -12,9 +12,8 @@ install:
     - WHEELHOUSE=$PWD/wheelhouse
     - pip wheel -w $WHEELHOUSE https://github.com/cython/cython/archive/0.18.zip
     - PIPW="pip wheel -w $WHEELHOUSE"
-    - PIPI="pip install wheel -f http://travis-wheels.scikit-image.org"
     - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base gfortran
-    - $PIPI install -f $WHEELHOUSE cython==0.18
+    - pip install -f $WHEELHOUSE cython==0.18
     - $PIPW numpy==1.5.1
     - pip install -f $WHEELHOUSE numpy==1.5.1
     - $PIPW -v scipy==0.9.0
