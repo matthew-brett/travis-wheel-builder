@@ -4,8 +4,7 @@ language: python
 env:
     global:
        # Choose the package names you want to build here
-       #- TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py cvxopt"
-       - TO_BUILD="cvxopt"
+       - TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py cvxopt"
 python:
     - 2.6
     - 2.7
