@@ -7,21 +7,20 @@ env:
        #- TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py cvxopt"
        - TO_BUILD="cvxopt"
 python:
-    - 2.6
     - 2.7
-    - 3.2
-    - 3.3
-    - 3.4
 install:
     - WHEELHOUSE=$PWD/wheelhouse
-    - if [ "${TRAVIS_PYTHON_VERSION:0:1}" == 2 ]; then
-        NUMPY_VERSION=1.6.0;
-      else
-        NUMPY_VERSION=1.7.1;
-      fi
-    - source travis_install.sh
+    - pip wheel -w $WHEELHOUSE https://github.com/cython/cython/archive/0.18.zip
+    - PIPW="pip wheel -w $WHEELHOUSE"
+    - PIPI="pip install wheel -f http://travis-wheels.scikit-image.org"
+    - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base gfortran
+    - $PIPI install -f $WHEELHOUSE cython==0.18
+    - $PIPW numpy==1.5.1
+    - pip install -f $WHEELHOUSE numpy==1.5.1
+    - $PIPW -v scipy==0.9.0
+    - $PIPW nibabel
 script:
-    - pip install --no-index -f $WHEELHOUSE $TO_BUILD
+    - pip install --no-index -f $WHEELHOUSE scipy nibabel
 before_deploy: cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
