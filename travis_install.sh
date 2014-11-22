@@ -52,6 +52,11 @@ function build_h5py {
     $PIPW h5py
 }
 
+function build_cvxopt {
+    sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
+    $PIPW cvxopt
+}
+
 if [[ $TO_BUILD == *cython* ]]; then
     build_cython
 fi
@@ -75,4 +80,7 @@ if [[ $TO_BUILD == *tifffile* ]]; then
 fi
 if [[ $TO_BUILD == *h5py* ]]; then
     build_h5py
+fi
+if [[ $TO_BUILD == *cvxopt* ]]; then
+    build_cvxopt
 fi
