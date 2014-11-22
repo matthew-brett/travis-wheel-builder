@@ -4,8 +4,7 @@ language: python
 env:
     global:
        # Choose the package names you want to build here
-       #- TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py cvxopt"
-       TO_BUILD="nibabel"
+       - TO_BUILD="cython numpy scipy matplotlib pillow networkx tifffile h5py cvxopt"
 python:
     - 2.6
     - 2.7
@@ -20,10 +19,6 @@ install:
         NUMPY_VERSION=1.7.1;
       fi
     - source travis_install.sh
-    - $PIPI numpy
-    - $PIPW nibabel==1.0.0
-    - $PIPW nibabel==1.2.0
-    - $PIPW nibabel==1.2.2
 script:
     - pip install --no-index -f $WHEELHOUSE $TO_BUILD
 before_deploy: cd $WHEELHOUSE
