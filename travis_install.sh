@@ -40,7 +40,7 @@ function build_pillow {
 
 
 function build_networkx {
-    $PIPW networkx
+    $PIPW networkx==1.8
 }
 
 function build_tifffile {
