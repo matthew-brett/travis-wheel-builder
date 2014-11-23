@@ -61,11 +61,6 @@ function build_cvxopt {
 
 function build_six {
     $PIPW six
-    if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
-        $PIPW six==1.3
-    else
-        $PIPW six
-    fi 
 }
 
 if [[ $TO_BUILD == *cython* ]]; then
