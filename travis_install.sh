@@ -23,10 +23,6 @@ function build_matplotlib {
     else
         $PIPW matplotlib
     fi
-    if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
-        $PIPW matplotlib==1.1.1
-    fi
-
 }
 
 
@@ -40,10 +36,6 @@ function build_scipy {
 function build_pillow {
     sudo apt-get install libtiff4-dev libwebp-dev
     $PIPW pillow
-    if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
-        $PIPW pillow==1.7.8
-    fi
-
 }
 
 
@@ -65,6 +57,15 @@ function build_h5py {
 function build_cvxopt {
     sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
     $PIPW cvxopt
+}
+
+function build_six {
+    $PIPW six
+    if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
+        $PIPW six==1.3
+    else
+        $PIPW six
+    fi 
 }
 
 if [[ $TO_BUILD == *cython* ]]; then
@@ -93,4 +94,7 @@ if [[ $TO_BUILD == *h5py* ]]; then
 fi
 if [[ $TO_BUILD == *cvxopt* ]]; then
     build_cvxopt
+fi
+if [[ $TO_BUILD == *six* ]]; then
+    build_six
 fi
