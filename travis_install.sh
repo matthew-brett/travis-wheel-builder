@@ -24,8 +24,8 @@ for pkg_spec in $TO_BUILD; do
     if [[ $pkg_name == matplotlib ]]; then
         $APT_INSTALL libpng-dev libfreetype6-dev
         # Python 3.2 only compiles up to 1.3.1
-        if [ "$pkg_name" -eq "$pkg_spec" -a "$PYVER" -eq "3.2" ]; then
-            $pkg_spec="matplotlib==1.3.1"
+        if [ "$pkg_name" == "$pkg_spec" -a "$PYVER" == "3.2" ]; then
+            pkg_spec="matplotlib==1.3.1"
         fi
     elif [[ $pkg_name =~ ^(pillow|tifffile)$ ]]; then
         $APT_INSTALL libtiff4-dev libwebp-dev
