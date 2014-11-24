@@ -1,20 +1,35 @@
 # Travis install phase
-# vim: let g:is_bash=1
 PIPW="pip wheel -w $WHEELHOUSE"
 PIPI="pip install -f http://travis-wheels.scikit-image.org"
 PIPWI="pip install -f $WHEELHOUSE"
 APT_INSTALL="sudo apt-get install"
 BLAS_LAPACK_DEBS="libblas-dev liblapack-dev libatlas3gf-base"
 PYVER=$TRAVIS_PYTHON_VERSION
+# Packages known to need numpy
+NEEDS_NUMPY="scipy matplotlib pillow h5py"
 
-$PIPI wheel
+# Install packages we need to build wheels
+$PIPI wheel $PRE_BUILD
+
+name_in() {
+    local target=$1
+    shift
+    for element in $@; do
+        [[ $element == $target ]] && return 0
+    done
+    return 1
+}
 
 for pkg_spec in $TO_BUILD; do
+    # Get package name from package spec
+    # e.g. "matplotlib" from "matplotlib==1.3.1"
     IFS="=<>" read -ra pkg_name <<< "$pkg_spec"
-    if [[ $pkg_name =~ ^(numpy|scipy)$ ]]; then
+    if name_in $pkg_name numpy scipy; then
         $APT_INSTALL $BLAS_LAPACK_DEBS gfortran
     fi
-    if [[ $pkg_name =~ ^(scipy|matplotlib|pillow|h5py)$ ]]; then
+    # Some packages need numpy.
+    # NUMPY_VERSION specifies a specific version
+    if name_in $pkg_name $NEEDS_NUMPY; then
         if [ -n "$NUMPY_VERSION" ]; then
             $PIPI numpy==$NUMPY_VERSION
         else
@@ -27,17 +42,14 @@ for pkg_spec in $TO_BUILD; do
         if [ "$pkg_name" == "$pkg_spec" -a "$PYVER" == "3.2" ]; then
             pkg_spec="matplotlib==1.3.1"
         fi
-    elif [[ $pkg_name =~ ^(pillow|tifffile)$ ]]; then
+    elif name_in $pkg_name pillow tifffile; then
         $APT_INSTALL libtiff4-dev libwebp-dev
     elif [[ $pkg_name == h5py ]]; then
         $APT_INSTALL libhdf5-serial-dev
     elif [[ $pkg_name == cvxopt ]]; then
         $APT_INSTALL $BLAS_LAPACK_DEBS
     fi
-    unset pip_extra
-    if [[ $pkg_name == scipy ]]; then
-        # scipy needs -v flag otherwise travis times out for lack of output
-        pip_extra="-v"
-    fi
+    # scipy needs -v flag otherwise travis times out for lack of output
+    [[ $pkg_name == scipy ]] && pip_extra='-v' || pip_extra=''
     $PIPW $pip_extra $pkg_spec
 done
