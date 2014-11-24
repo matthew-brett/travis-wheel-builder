@@ -6,29 +6,23 @@ PIPWI="pip install -f $WHEELHOUSE"
 APT_INSTALL="sudo apt-get install"
 BLAS_LAPACK_DEBS="libblas-dev liblapack-dev libatlas3gf-base"
 
-function build_install {
-    $PIPW $1
-    $PIPWI $1
-}
-
 $PIPI wheel
 
 for pkg_spec in $TO_BUILD; do
     IFS="=<>" read -ra pkg_name <<< "$pkg_spec"
     if [[ $pkg_name =~ ^(numpy|scipy)$ ]]; then
         $APT_INSTALL $BLAS_LAPACK_DEBS gfortran
-        build_install cython
     fi
     if [[ $pkg_name =~ ^(scipy|matplotlib|pillow|h5py)$ ]]; then
         if [ -n "$NUMPY_VERSION" ]; then
-            build_install numpy==$NUMPY_VERSION
+            $PIPI numpy==$NUMPY_VERSION
         else
-            build_install numpy
+            $PIPI numpy
         fi
     fi
     if [[ $pkg_name == matplotlib ]]; then
         $APT_INSTALL libpng-dev libfreetype6-dev
-    elif [[ $pkg_name == pillow ]]; then
+    if [[ $pkg_name =~ ^(pillow|tifffile)$ ]]; then
         $APT_INSTALL libtiff4-dev libwebp-dev
     elif [[ $pkg_name == h5py ]]; then
         $APT_INSTALL libhdf5-serial-dev
