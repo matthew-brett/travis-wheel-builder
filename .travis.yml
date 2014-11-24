@@ -4,7 +4,7 @@ language: python
 env:
     global:
        # Choose the package names you want to build here
-       - TO_BUILD="networkx"
+       - TO_BUILD="cython numpy scipy matplotlib pillow h5py cvxopt networkx"
 python:
     - 2.6
     - 2.7
