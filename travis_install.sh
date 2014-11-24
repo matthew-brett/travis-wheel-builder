@@ -1,6 +1,6 @@
 # Travis install phase
 PIPW="pip wheel -w $WHEELHOUSE"
-PIPI="pip install -f http://travis-wheels.scikit-image.org"
+PIPI="pip install --timeout=60 -f http://travis-wheels.scikit-image.org"
 PIPWI="pip install -f $WHEELHOUSE"
 APT_INSTALL="sudo apt-get install"
 BLAS_LAPACK_DEBS="libblas-dev liblapack-dev libatlas3gf-base"
