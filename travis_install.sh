@@ -5,6 +5,7 @@ PIPI="pip install -f http://travis-wheels.scikit-image.org"
 PIPWI="pip install -f $WHEELHOUSE"
 APT_INSTALL="sudo apt-get install"
 BLAS_LAPACK_DEBS="libblas-dev liblapack-dev libatlas3gf-base"
+PYVER=$TRAVIS_PYTHON_VERSION
 
 $PIPI wheel
 
@@ -22,7 +23,11 @@ for pkg_spec in $TO_BUILD; do
     fi
     if [[ $pkg_name == matplotlib ]]; then
         $APT_INSTALL libpng-dev libfreetype6-dev
-    if [[ $pkg_name =~ ^(pillow|tifffile)$ ]]; then
+        # Python 3.2 only compiles up to 1.3.1
+        if [ "$pkg_name" -eq "$pkg_spec" -a "$PYVER" -eq "3.2" ]; then
+            $pkg_spec="matplotlib==1.3.1"
+        fi
+    elif [[ $pkg_name =~ ^(pillow|tifffile)$ ]]; then
         $APT_INSTALL libtiff4-dev libwebp-dev
     elif [[ $pkg_name == h5py ]]; then
         $APT_INSTALL libhdf5-serial-dev
