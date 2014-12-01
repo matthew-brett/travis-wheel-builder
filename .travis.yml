@@ -5,7 +5,7 @@ env:
     global:
        # List packages you want to build here, maybe with versions
        # e.g numpy scipy matplotlib==1.3.1 ipython
-       - TO_BUILD="cython numpy scipy pillow h5py cvxopt networkx tifffile matplotlib scikit-learn"
+       - TO_BUILD="astropy"
        # Any Python packages that need installing before you build the wheels
        - PRE_BUILD=""
 python:
@@ -21,7 +21,7 @@ install:
       else
         NUMPY_VERSION=1.7.1;
       fi
-    - source travis_install.sh
+    - python travis_install.py
 script:
     - pip install --no-index -f $WHEELHOUSE $TO_BUILD
 before_deploy: cd $WHEELHOUSE
