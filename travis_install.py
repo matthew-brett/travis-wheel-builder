@@ -13,22 +13,26 @@ NEEDS_NUMPY = "scipy matplotlib pillow h5py scikit-learn astropy"
 NEEDS_SCIPY = "scikit-learn"
 
 
+def run(cmd):
+    print(cmd)
+    os.system(cmd)
+
+
 def apt_install(*pkgs):
     """Install packages using apt"""
-    os.system('sudo apt-get install %s' % ' '.join(pkgs))
+    run('sudo apt-get install %s' % ' '.join(pkgs))
 
 
 def pipi(*args):
     """Install package from the wheel site or on PyPI"""
-    os.system('pip install -timeout=60 -f %s %s' %
-              (WHEEL_SITE, ' '.join(args)))
+    run('pip install -timeout=60 -f %s %s' %
+        (WHEEL_SITE, ' '.join(args)))
 
 
 def pipw(*args):
     """Create a wheel for a package in the WHEELHOUSE"""
-    os.system('pip wheel -w %s %s' %
-              (ENV['WHEELHOUSE'], ' '.join(args)))
-
+    run('pip wheel -w %s %s' %
+        (ENV['WHEELHOUSE'], ' '.join(args)))
 
 # Install the packages we need to build wheels
 pipi('wheel', ENV['PRE_BUILD'])
