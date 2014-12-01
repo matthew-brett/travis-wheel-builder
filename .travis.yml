@@ -15,11 +15,11 @@ python:
     - 3.3
     - 3.4
 install:
-    - WHEELHOUSE=$PWD/wheelhouse
+    - export WHEELHOUSE=$PWD/wheelhouse
     - if [ "${TRAVIS_PYTHON_VERSION:0:1}" == 2 ]; then
-        NUMPY_VERSION=1.6.0;
+        export NUMPY_VERSION=1.6.0;
       else
-        NUMPY_VERSION=1.7.1;
+        export NUMPY_VERSION=1.7.1;
       fi
     - python travis_install.py
 script:
