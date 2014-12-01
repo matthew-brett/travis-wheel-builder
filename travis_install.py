@@ -30,7 +30,7 @@ def pipw(*args):
               (ENV['WHEELHOUSE'], ' '.join(args)))
 
 
-# Install packages we need to build wheels
+# Install the packages we need to build wheels
 pipi('wheel', ENV['PRE_BUILD'])
 
 
