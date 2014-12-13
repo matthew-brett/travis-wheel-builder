@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 
 # Travis install phase
 WHEEL_SITE = "http://travis-wheels.scikit-image.org"
@@ -15,8 +16,7 @@ NEEDS_SCIPY = "scikit-learn"
 
 def run(cmd):
     print(cmd)
-    os.system(cmd)
-
+    subprocess.check_call(cmd, shell=True)
 
 def apt_install(*pkgs):
     """Install packages using apt"""
@@ -72,8 +72,23 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name in 'cvxopt scikit-learn'.split():
         apt_install(BLAS_LAPACK_DEBS)
 
+    elif pkg_name.lower() == 'simpleitk':
+        apt_install('cmake')
+
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name == 'scipy':
         pipw('-v', pkg_spec)
+
+    elif pkg_name.lower() == 'simpleitk':
+        link = 'http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.0/Python/SimpleITK-0.8.0-cp%s-%s-linux_x86_64.whl'
+        ver = PYVER.replace('.', '')
+        if ver in ['26', '27']:
+            link = link % (ver, 'none')
+        elif ver in ['32', '33']:
+            link = link % (ver, 'cp%sm' % ver)
+        else:
+            continue
+        run('wget %s -P %s' % (link, ENV['WHEELHOUSE']))
+
     else:
         pipw(pkg_spec)
