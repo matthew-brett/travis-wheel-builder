@@ -80,12 +80,12 @@ for pkg_spec in ENV['TO_BUILD'].split():
         pipw('-v', pkg_spec)
 
     elif pkg_name.lower() == 'simpleitk':
-        link = 'http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.0/Python/SimpleITK-0.8.0-%s-%s-linux_x86_64.whl'
-        if PYVER in ['2.6', '2.7']:
-            link = link % (PYVER.replace('.', ''), 'none')
-        elif PYVER in ['3.2', '3.3']:
-            sub = 'cp%s' % PYVER.replace('.', '')
-            link = link % (sub, sub + 'm')
+        link = 'http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.0/Python/SimpleITK-0.8.0-cp%s-%s-linux_x86_64.whl'
+        ver = PYVER.replace('.', '')
+        if ver in ['26', '27']:
+            link = link % (ver, 'none')
+        elif ver in ['32', '33']:
+            link = link % (ver, 'cp%sm' % ver)
         else:
             continue
         run('wget %s -P %s' % (link, ENV['WHEELHOUSE']))
