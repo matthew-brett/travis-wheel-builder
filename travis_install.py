@@ -88,7 +88,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
             link = link % (sub, sub + 'm')
         else:
             continue
-        run('wget %s -o %s' % (link, ENV['WHEELHOUSE']))
+        run('wget %s -P %s' % (link, ENV['WHEELHOUSE']))
 
     else:
         pipw(pkg_spec)
