@@ -11,9 +11,10 @@ as `sckit-image <https://github.com/scikit-image>`_ and `dipy
 <https://github.com/nipy/dipy>`_.
 
 At the moment the build recipes are in bash, in the file
-``travis_install.sh``.  If you are adding a new package you want to build, you
-should add any ``apt-get`` or Python dependencies in the ``travis_install.sh``
-script, and modify the ``TO_BUILD`` environment variable in ``.travis.yml``.
+``travis_install.py``.  If you are adding a new package you want to build, you
+should add any ``apt-get`` or Python dependencies to the relevant sections in
+the ``travis_install.py`` script, and modify the ``TO_BUILD`` environment
+variable in ``.travis.yml``.
 
 Contact github users @matthew-brett or @blink1073 to get access to the
 repository, or submit a pull request here.

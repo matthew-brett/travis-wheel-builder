@@ -18,6 +18,7 @@ def run(cmd):
     print(cmd)
     subprocess.check_call(cmd, shell=True)
 
+
 def apt_install(*pkgs):
     """Install packages using apt"""
     run('sudo apt-get install %s' % ' '.join(pkgs))
@@ -34,9 +35,9 @@ def pipw(*args):
     run('pip wheel -w %s %s' %
         (ENV['WHEELHOUSE'], ' '.join(args)))
 
+
 # Install the packages we need to build wheels
 pipi('wheel', ENV['PRE_BUILD'])
-
 
 for pkg_spec in ENV['TO_BUILD'].split():
     # Get package name from package spec
