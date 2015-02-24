@@ -81,6 +81,8 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name_lc == 'scikit-image':
         pipi('six')
         run('pip freeze')
+        run('pip install six')
+        run('pip freeze')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
