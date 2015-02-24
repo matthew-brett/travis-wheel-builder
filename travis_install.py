@@ -79,7 +79,9 @@ for pkg_spec in ENV['TO_BUILD'].split():
         apt_install('cmake')
 
     elif pkg_name_lc == 'scikit-image':
+        print('installing six')
         pipi('six')
+    print('ready to install stuff')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
