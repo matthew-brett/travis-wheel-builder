@@ -9,7 +9,8 @@ ENV = os.environ
 PYVER = ENV['TRAVIS_PYTHON_VERSION']
 
 # Packages known to need numpy
-NEEDS_NUMPY = "scipy matplotlib pillow h5py scikit-learn astropy"
+NEEDS_NUMPY = ("scipy matplotlib pillow h5py scikit-learn astropy"
+               "scikit-image")
 # Packages known to need scipy
 NEEDS_SCIPY = "scikit-learn"
 
@@ -43,6 +44,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
     # Get package name from package spec
     # e.g. "matplotlib" from "matplotlib==1.3.1"
     pkg_name = re.split('\W', pkg_spec)[0]
+    pkg_name_lc = pkg_name.lower()
 
     if pkg_name in 'numpy scipy'.split():
         apt_install(BLAS_LAPACK_DEBS, 'gfortran')
@@ -73,14 +75,17 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name in 'cvxopt scikit-learn'.split():
         apt_install(BLAS_LAPACK_DEBS)
 
-    elif pkg_name.lower() == 'simpleitk':
+    elif pkg_name_lc == 'simpleitk':
         apt_install('cmake')
 
+    elif pkg_name_lc == 'scikit-image':
+        pipi('six')
+
     # scipy needs -v flag otherwise travis times out for lack of output
-    if pkg_name == 'scipy':
+    if pkg_name_lc == 'scipy':
         pipw('-v', pkg_spec)
 
-    elif pkg_name.lower() == 'simpleitk':
+    elif pkg_name_lc == 'simpleitk':
         link = 'http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.0/Python/SimpleITK-0.8.0-cp%s-%s-linux_x86_64.whl'
         ver = PYVER.replace('.', '')
         if ver in ['26', '27']:
