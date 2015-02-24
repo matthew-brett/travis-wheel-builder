@@ -43,7 +43,7 @@ pipi('wheel', ENV['PRE_BUILD'])
 for pkg_spec in ENV['TO_BUILD'].split():
     # Get package name from package spec
     # e.g. "matplotlib" from "matplotlib==1.3.1"
-    pkg_name = re.split('\W', pkg_spec)[0]
+    pkg_name = re.split('[\[ =<>!,]*', pkg_spec)[0]
     pkg_name_lc = pkg_name.lower()
 
     if pkg_name in 'numpy scipy'.split():
@@ -79,9 +79,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
         apt_install('cmake')
 
     elif pkg_name_lc == 'scikit-image':
-        print('installing six')
         pipi('six')
-    print('ready to install stuff')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
