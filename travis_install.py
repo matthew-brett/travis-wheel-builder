@@ -27,7 +27,7 @@ def apt_install(*pkgs):
 
 def pipi(*args):
     """Install package from the wheel site or on PyPI"""
-    run('pip install -timeout=60 -f %s %s' %
+    run('pip install --timeout=60 -f %s %s' %
         (WHEEL_SITE, ' '.join(args)))
 
 
@@ -80,9 +80,6 @@ for pkg_spec in ENV['TO_BUILD'].split():
 
     elif pkg_name_lc == 'scikit-image':
         pipi('six')
-        run('pip freeze')
-        run('pip install six')
-        run('pip freeze')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
