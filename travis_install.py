@@ -81,6 +81,13 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name_lc == 'scikit-image':
         pipi('six')
 
+    elif pkg_name_lc == 'pil':
+        run('sudo apt-get build-dep python-imaging')
+        run('sudo apt-get install python-dev')
+        run('sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib/')
+        run('sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/')
+        run('sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/')
+
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
         pipw('-v', pkg_spec)
