@@ -21,6 +21,7 @@ install:
       else
         export NUMPY_VERSION=1.7.1;
       fi
+    - pip install -U pip
     - python travis_install.py
 script:
     - pip install --no-index -f $WHEELHOUSE $TO_BUILD
