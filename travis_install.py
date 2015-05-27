@@ -103,5 +103,8 @@ for pkg_spec in ENV['TO_BUILD'].split():
             continue
         run('wget %s -P %s' % (link, ENV['WHEELHOUSE']))
 
+    elif pkg_name_lc == 'pil':
+        pipw('--allow-external', 'PIL', '--allow-unverified', 'PIL', 'pil')
+
     else:
         pipw(pkg_spec)
