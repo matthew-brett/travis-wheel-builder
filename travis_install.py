@@ -28,7 +28,7 @@ def apt_install(*pkgs):
 def pipi(*args):
     """Install package from the wheel site or on PyPI"""
     run('pip install --timeout=60 --trusted-host %s -f %s %s' %
-        (WHEEL_SITE, WHEEL_SITE, ' '.join(args)))
+        (WHEEL_SITE.replace('http://', ''), WHEEL_SITE, ' '.join(args)))
 
 
 def pipw(*args):
