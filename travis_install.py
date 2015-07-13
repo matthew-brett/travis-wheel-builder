@@ -81,6 +81,9 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name_lc == 'scikit-image':
         pipi('six')
 
+    elif pkg_name_lc == 'imread':
+        apt_install('libtiff4-dev libwebp-dev libpng12-dev xcftools')
+
     elif pkg_name_lc == 'pil':
         run('sudo apt-get build-dep python-imaging')
         run('sudo apt-get install python-dev')
