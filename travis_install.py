@@ -38,7 +38,8 @@ def pipw(*args):
 
 
 # Install the packages we need to build wheels
-pipi('wheel', ENV['PRE_BUILD'])
+if 'PRE_BUILD' in ENV:
+    pipi('wheel', ENV['PRE_BUILD'])
 
 for pkg_spec in ENV['TO_BUILD'].split():
     # Get package name from package spec
