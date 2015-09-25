@@ -33,7 +33,10 @@ install:
     - python travis_install.py
 script:
     - pip install --no-index -f $WHEELHOUSE $TO_BUILD
-before_deploy: cd $WHEELHOUSE
+before_deploy:
+- cd $WHEELHOUSE
+# Fix for https://github.com/travis-ci/travis-ci/issues/4635
+- rvm 1.9.3 do gem install net-ssh -v 2.9.2
 deploy:
   provider: cloudfiles
   username: travis-worker
