@@ -5,7 +5,7 @@ env:
     global:
        # List packages you want to build here, maybe with versions
        # e.g numpy scipy matplotlib==1.3.1 ipython
-       - TO_BUILD="transforms3d"
+       - TO_BUILD="cython"
        # Any Python packages that need installing before you build the wheels
        # - PRE_BUILD="cython"
        # Override default numpy version for packages needing numpy
@@ -39,6 +39,8 @@ before_deploy:
 - rvm 1.9.3 do gem install net-ssh -v 2.9.2
 deploy:
   provider: cloudfiles
+  edge:
+    branch: bug-rackspace
   username: travis-worker
   api_key:
       secure: "ilWZL8wbTP/DNDMQgIsD2UfFOwofhEVqjiejyfM+/J9HcbKpzB08G5a1HIlT/mN1bmbVwXZLhhGGUg7U2XHdpBgCW3JEN8bRVj4MnIaG6Uu+cobPyV85YBmhN7tZPHhDoW2BHqi6wP96PdSCCVGD6S86/IGhSnUDLL7IG3VdgIw="
