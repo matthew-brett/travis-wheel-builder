@@ -97,8 +97,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run('sudo apt-get install build-essential git cmake libqt4-dev')
         run('sudo apt-get install libphonon-dev python2.7-dev libxml2-dev')
         run('sudo apt-get install libxslt1-dev qtmobility-dev')
-        run('wget https://pypi.python.org/packages/source/P/PySide/PySide-1.2.2.tar.gz')
-        run('tar -xvzf PySide-1.2.2.tar.gz')
+        run('git clone https://github.com/PySide/pyside-setup')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
@@ -119,6 +118,6 @@ for pkg_spec in ENV['TO_BUILD'].split():
         pipw('--allow-external', 'PIL', '--allow-unverified', 'PIL', 'pil')
 
     elif pkg_name_lc == 'pyside':
-        run('cd PySide-1.2.2 && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
+        run('cd pyside-setup && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
     else:
         pipw(pkg_spec)
