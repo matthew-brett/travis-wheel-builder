@@ -97,9 +97,8 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run('sudo apt-get install build-essential git cmake libqt4-dev')
         run('sudo apt-get install libphonon-dev python2.7-dev libxml2-dev')
         run('sudo apt-get install libxslt1-dev qtmobility-dev')
-        run('wget https://pypi.python.org/packages/source/P/PySide/PySide-1.2.2.tar.gz')
-        run('tar -xvzf PySide-1.2.2.tar.gz')
-        run('cd PySide-1.2.2')
+        run('git clone https://github.com/PySide/pyside-setup.git pyside-setup')
+        run('cd pyside-setup')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
