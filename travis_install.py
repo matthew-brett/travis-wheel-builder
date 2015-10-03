@@ -22,7 +22,7 @@ def run(cmd):
 
 def apt_install(*pkgs):
     """Install packages using apt"""
-    run('sudo apt-get install %s' % ' '.join(pkgs))
+    run('sudo apt-get install -q %s' % ' '.join(pkgs))
 
 
 def pipi(*args):
@@ -93,11 +93,9 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run('sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/')
 
     elif pkg_name_lc == 'pyside':
-        run('sudo apt-get update')
-        run('sudo apt-get install build-essential git cmake libqt4-dev')
-        run('sudo apt-get install libphonon-dev python2.7-dev libxml2-dev')
-        run('sudo apt-get install libxslt1-dev qtmobility-dev')
-        run('git clone https://github.com/PySide/pyside-setup')
+        apt_install('build-essential git cmake libqt4-dev libphonon-dev')
+        apt_install('python2.7-dev libxml2-dev libxslt1-dev qtmobility-dev')
+        run('git clone https://github.com/PySide/pyside-setup --quiet')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':

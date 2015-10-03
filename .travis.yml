@@ -13,6 +13,7 @@ env:
 python:
     - 3.5
 install:
+    - sudo apt-get update -q
     - export WHEELHOUSE=$PWD/wheelhouse
     # Set base numpy version for packages requiring numpy
     # Allow override by setting global variable NUMPY_VERSION
