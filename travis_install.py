@@ -118,7 +118,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
 
     elif pkg_name_lc == 'pyside':
         # patch for Py35 compatibility
-        run("cd PySide-1.2.2 && sed -i 's/subproccess.mswindows/False/g' popenasync.py")
+        run("cd PySide-1.2.2 && sed -i -e 's/subproccess.mswindows/False/g' popenasync.py")
         run('cd PySide-1.2.2 && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
     else:
         pipw(pkg_spec)
