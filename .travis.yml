@@ -7,10 +7,9 @@ env:
        # e.g numpy scipy matplotlib==1.3.1 ipython
        - TO_BUILD="imageio tifffile"
        # Any Python packages that need installing before you build the wheels
-       - PRE_BUILD=""
+       # - PRE_BUILD="cython"
        # Override default numpy version for packages needing numpy
        #- NUMPY_VERSION==1.5.1
-python:
     - 3.5
 install:
     - export WHEELHOUSE=$PWD/wheelhouse
@@ -28,7 +27,8 @@ install:
     - python travis_install.py
 script:
     - pip install --no-index -f $WHEELHOUSE $TO_BUILD
-before_deploy: cd $WHEELHOUSE
+before_deploy:
+- cd $WHEELHOUSE
 deploy:
   provider: cloudfiles
   username: travis-worker
