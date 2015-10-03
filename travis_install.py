@@ -119,7 +119,7 @@ for pkg_spec in ENV['TO_BUILD'].split():
         pipw('--allow-external', 'PIL', '--allow-unverified', 'PIL', 'pil')
 
     elif pkg_name_lc == 'pyside':
-        pipw('--qmake=/usr/bin/qmake-qt4')
+        pipw('--qmake=/usr/bin/qmake-qt4', pkg_spec)
 
     else:
         pipw(pkg_spec)
