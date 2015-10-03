@@ -95,7 +95,8 @@ for pkg_spec in ENV['TO_BUILD'].split():
     elif pkg_name_lc == 'pyside':
         apt_install('build-essential git cmake libqt4-dev libphonon-dev')
         apt_install('python2.7-dev libxml2-dev libxslt1-dev qtmobility-dev')
-        run('git clone https://github.com/PySide/pyside-setup --quiet')
+        run('wget https://pypi.python.org/packages/source/P/PySide/PySide-1.2.2.tar.gz')
+        run('tar -xvzf PySide-1.2.2.tar.gz')
 
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
@@ -116,6 +117,8 @@ for pkg_spec in ENV['TO_BUILD'].split():
         pipw('--allow-external', 'PIL', '--allow-unverified', 'PIL', 'pil')
 
     elif pkg_name_lc == 'pyside':
-        run('cd pyside-setup && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
+        # patch for Py35 compatibility
+        run("cd PySide-1.2.2 && sed -i 's/subproccess.mswindows/False/g' popenasync.py")
+        run('cd PySide-1.2.2 && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
     else:
         pipw(pkg_spec)
