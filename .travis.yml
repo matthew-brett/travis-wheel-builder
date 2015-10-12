@@ -5,13 +5,17 @@ env:
     global:
        # List packages you want to build here, maybe with versions
        # e.g numpy scipy matplotlib==1.3.1 ipython
-       - TO_BUILD="six==1.0.0"
+       - TO_BUILD="numpy"
        # Any Python packages that need installing before you build the wheels
        # - PRE_BUILD="cython"
        # Override default numpy version for packages needing numpy
        #- NUMPY_VERSION==1.5.1
 python:
     - 2.7
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
 install:
     - sudo apt-get update -q
     - export WHEELHOUSE=$PWD/wheelhouse
