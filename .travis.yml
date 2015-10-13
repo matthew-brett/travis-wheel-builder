@@ -11,7 +11,8 @@ env:
        # Override default numpy version for packages needing numpy
        #- NUMPY_VERSION==1.5.1
 python:
-    - 2.7
+    - 2.6
+    # - 2.7
     # - 3.2
     # - 3.3
     # - 3.4
