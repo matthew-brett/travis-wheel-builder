@@ -11,12 +11,12 @@ env:
        # Override default numpy version for packages needing numpy
        #- NUMPY_VERSION==1.5.1
 python:
-    - 2.6
-    # - 2.7
-    # - 3.2
-    # - 3.3
-    # - 3.4
-    # - 3.5
+    #- 2.6
+    - 2.7
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
 install:
     - sudo apt-get update -q
     - export WHEELHOUSE=$PWD/wheelhouse
