@@ -13,6 +13,8 @@ NEEDS_NUMPY = ("scipy matplotlib pillow h5py scikit-learn astropy"
                "scikit-image pandas dipy nipy")
 # Packages known to need scipy
 NEEDS_SCIPY = "scikit-learn"
+# Packages known to need Cython
+NEEDS_CYTHON = "numpy scipy h5py"
 
 
 def run(cmd):
@@ -60,6 +62,9 @@ for pkg_spec in ENV['TO_BUILD'].split():
 
     if pkg_name in NEEDS_SCIPY.split():
         pipi('scipy')
+
+    if pkg_name in NEEDS_CYTHON.split():
+        pipi('--ignore-installed cython')
 
     if pkg_name == 'matplotlib':
         apt_install('libpng-dev libfreetype6-dev')
