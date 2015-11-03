@@ -16,6 +16,10 @@ NEEDS_SCIPY = "scikit-learn statsmodels"
 # Packages known to need Cython
 NEEDS_CYTHON = "numpy scipy h5py"
 
+# Arguments to pip install, wheel using Rackspace wheelhouse
+WHEEL_SITE_ARGS='--timeout=60 --trusted-host {0} -f {1}'.format(
+    WHEEL_SITE.replace('http://', ''), WHEEL_SITE)
+
 
 def run(cmd):
     print(cmd)
@@ -29,14 +33,13 @@ def apt_install(*pkgs):
 
 def pipi(*args):
     """Install package from the wheel site or on PyPI"""
-    run('pip install --timeout=60 --trusted-host %s -f %s %s' %
-        (WHEEL_SITE.replace('http://', ''), WHEEL_SITE, ' '.join(args)))
+    run('pip install {0} {1}'.format(WHEEL_SITE_ARGS, ' '.join(args)))
 
 
 def pipw(*args):
     """Create a wheel for a package in the WHEELHOUSE"""
-    run('pip wheel -w %s %s' %
-        (ENV['WHEELHOUSE'], ' '.join(args)))
+    run('pip wheel -w {0} {1} {2}'.format(
+        ENV['WHEELHOUSE'], WHEEL_SITE_ARGS, ' '.join(args)))
 
 
 # Install the packages we need to build wheels
