@@ -12,7 +12,7 @@ PYVER = ENV['TRAVIS_PYTHON_VERSION']
 NEEDS_NUMPY = ("scipy matplotlib pillow h5py scikit-learn astropy"
                "scikit-image pandas dipy nipy statsmodels")
 # Packages known to need scipy
-NEEDS_SCIPY = "scikit-learn"
+NEEDS_SCIPY = "scikit-learn statsmodels"
 # Packages known to need Cython
 NEEDS_CYTHON = "numpy scipy h5py"
 
