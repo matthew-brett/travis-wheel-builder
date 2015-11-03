@@ -38,8 +38,8 @@ def pipi(*args):
 
 def pipw(*args):
     """Create a wheel for a package in the WHEELHOUSE"""
-    run('pip wheel -w {0} {1} {2}'.format(
-        ENV['WHEELHOUSE'], WHEEL_SITE_ARGS, ' '.join(args)))
+    run('pip wheel -w {0} {1} --no-binary {2} {3}'.format(
+        ENV['WHEELHOUSE'], WHEEL_SITE_ARGS, ','.join(args), ' '.join(args)))
 
 
 # Install the packages we need to build wheels
