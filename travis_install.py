@@ -100,6 +100,9 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run('sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/')
         run('sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/')
 
+    elif pkg_name_lc == 'pymvpa2':
+        run('sudo apt-get install swig')
+
     elif pkg_name_lc == 'pyside':
         apt_install('build-essential git cmake libqt4-dev libphonon-dev')
         apt_install('python2.7-dev libxml2-dev libxslt1-dev qtmobility-dev')
