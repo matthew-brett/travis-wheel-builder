@@ -46,7 +46,12 @@ def pipw(*args):
 if 'PRE_BUILD' in ENV:
     pipi('wheel', ENV['PRE_BUILD'])
 
-for pkg_spec in ENV['TO_BUILD'].split():
+sources = ENV.get('SOURCES', '').split()
+pkg_specs = ENV['TO_BUILD'].split()
+if not sources:
+    sources = ['pypi'] * len(pkg_specs)
+
+for pkg_spec, source in zip(pkg_specs, sources):
     # Get package name from package spec
     # e.g. "matplotlib" from "matplotlib==1.3.1"
     pkg_name = re.split('[\[ =<>!,]*', pkg_spec)[0]
@@ -54,6 +59,10 @@ for pkg_spec in ENV['TO_BUILD'].split():
 
     if pkg_name in 'numpy scipy'.split():
         apt_install(BLAS_LAPACK_DEBS, 'gfortran')
+
+    ########################################
+    # First install any package dependencies
+    ########################################
 
     # Some packages need numpy.
     # NUMPY_VERSION specifies a specific version
@@ -109,9 +118,16 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run('wget https://pypi.python.org/packages/source/P/PySide/PySide-1.2.2.tar.gz')
         run('tar -xvzf PySide-1.2.2.tar.gz')
 
+    ##########################
+    # Next build package wheel
+    ##########################
+
+    if source == 'pypi':
+        source = pkg_spec
+
     # scipy needs -v flag otherwise travis times out for lack of output
     if pkg_name_lc == 'scipy':
-        pipw('-v', pkg_spec)
+        pipw('-v', source)
 
     elif pkg_name_lc == 'simpleitk':
         link = 'http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.0/Python/SimpleITK-0.8.0-cp%s-%s-linux_x86_64.whl'
@@ -132,4 +148,4 @@ for pkg_spec in ENV['TO_BUILD'].split():
         run("cd PySide-1.2.2 && sed -i 's/subprocess.mswindows/False/g' popenasync.py")
         run('cd PySide-1.2.2 && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
     else:
-        pipw(pkg_spec)
+        pipw(source)
