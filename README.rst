@@ -7,7 +7,7 @@ scikit-learn Rackspace container, pointed to by
 http://travis-wheels.scikit-image.org.
 
 We can then use these wheels in travis-ci runs for testing other software such
-as `sckit-image <https://github.com/scikit-image>`_ and `dipy
+as `scikit-image <https://github.com/scikit-image>`_ and `dipy
 <https://github.com/nipy/dipy>`_.
 
 At the moment the build recipes are in bash, in the file
