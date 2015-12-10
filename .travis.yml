@@ -4,8 +4,8 @@ language: python
 env:
     global:
        # List packages you want to build here, maybe with versions
-       # e.g numpy scipy matplotlib==1.3.1 ipython
-       - TO_BUILD="pillow==2.1.0"
+       # e.g "numpy scipy matplotlib==1.3.1 ipython"
+       - TO_BUILD="sharedmem==0.3.1 textblob==0.11.0"
        # Optional whitespace-separated list of pip specifications of where sources
        # should be found, where element of "pypi" defaults to fetching source
        # from pypi, and an empty or unset string defaults to all "pypi" elements.
