@@ -13,7 +13,7 @@ env:
        # Any Python packages that need installing before you build the wheels
        # - PRE_BUILD="cython"
        # Override default numpy version for packages needing numpy
-       # - NUMPY_VERSION==1.7.1
+       - NUMPY_VERSION==1.7.1
 python:
     - 2.6
     - 2.7
