@@ -18,3 +18,6 @@ variable in ``.travis.yml``.
 
 Contact github users @matthew-brett or @blink1073 to get access to the
 repository, or submit a pull request here.
+
+Read `the latest build log
+<https://travis-ci.org/matthew-brett/travis-wheel-builder>`__.
