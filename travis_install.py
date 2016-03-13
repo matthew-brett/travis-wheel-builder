@@ -4,7 +4,10 @@ import subprocess
 
 # Travis install phase
 WHEEL_SITE = "http://travis-wheels.scikit-image.org"
-BLAS_LAPACK_DEBS = "libatlas-base-dev"
+# The following line results in numpy wheels __not__ built against ATLAS
+BLAS_LAPACK_DEBS = "libblas-dev liblapack-dev libatlas3gf-base"
+# To build against ATLAS (and therefore have this apt-get dependency) use:
+# BLAS_LAPACK_DEBS = "libatlas-base-dev"
 ENV = os.environ
 PYVER = ENV['TRAVIS_PYTHON_VERSION']
 
