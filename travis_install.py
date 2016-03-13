@@ -4,7 +4,7 @@ import subprocess
 
 # Travis install phase
 WHEEL_SITE = "http://travis-wheels.scikit-image.org"
-BLAS_LAPACK_DEBS = "libblas-dev liblapack-dev libatlas3gf-base"
+BLAS_LAPACK_DEBS = "libatlas-base-dev"
 ENV = os.environ
 PYVER = ENV['TRAVIS_PYTHON_VERSION']
 
