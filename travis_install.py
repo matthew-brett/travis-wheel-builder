@@ -36,7 +36,7 @@ def pipi(*args):
     run('pip install {0} {1}'.format(WHEEL_SITE_ARGS, ' '.join(args)))
 
 
-def pipw(names, specs, extra_args):
+def pipw(names, specs, extra_args=''):
     """Create a wheel for package(s) with `names` and specs `specs`
     """
     if not isinstance(names, (list, tuple)):
