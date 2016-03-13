@@ -32,7 +32,7 @@ install:
     - pip install -U pip
     - python travis_install.py
 script:
-    - pip install --no-index -f $WHEELHOUSE $TO_BUILD
+    - for pkg in $TO_BUILD; do pip install --no-index -f $WHEELHOUSE $pkg; done
 before_deploy:
 - cd $WHEELHOUSE
 deploy:
