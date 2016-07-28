@@ -104,7 +104,7 @@ for pkg_spec, source in zip(pkg_specs, sources):
     elif pkg_name in 'pillow tifffile'.split():
         apt_install('libtiff4-dev libwebp-dev')
 
-    elif pkg_name == 'h5py':
+    elif pkg_name in ('h5py', 'tables'):
         apt_install('libhdf5-serial-dev')
 
     elif pkg_name in 'cvxopt scikit-learn'.split():
