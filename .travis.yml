@@ -5,7 +5,7 @@ env:
     global:
        # List packages you want to build here, maybe with versions
        # e.g "numpy scipy matplotlib==1.3.1 ipython"
-       - TO_BUILD="matplotlib==1.1.0"
+       - TO_BUILD="pyside"
        # Optional whitespace-separated list of pip specifications of where sources
        # should be found, where element of "pypi" defaults to fetching source
        # from pypi, and an empty or unset string defaults to all "pypi" elements.
@@ -13,13 +13,16 @@ env:
        # Any Python packages that need installing before you build the wheels
        # - PRE_BUILD="cython"
        # Override default numpy version for packages needing numpy
-       - NUMPY_VERSION=1.6.1
+       # - NUMPY_VERSION=1.6.1
+       # Pyside version
+       # - PYSIDE_VERSION=1.2.4
 python:
     - 2.6
     - 2.7
     - 3.3
     - 3.4
     - 3.5
+    - 3.6
 install:
     - sudo apt-get update -q
     - export WHEELHOUSE=$PWD/wheelhouse

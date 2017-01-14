@@ -10,6 +10,9 @@ BLAS_LAPACK_DEBS = "libblas-dev liblapack-dev libatlas3gf-base"
 # BLAS_LAPACK_DEBS = "libatlas-base-dev"
 ENV = os.environ
 PYVER = ENV['TRAVIS_PYTHON_VERSION']
+WHEELHOUSE = ENV['WHEELHOUSE']
+
+PYSIDE_VERSION = ENV.get('PYSIDE_VERSION', '1.2.4')
 
 # Packages known to need numpy
 NEEDS_NUMPY = ("scipy matplotlib pillow h5py scikit-learn astropy "
@@ -49,7 +52,7 @@ def pipw(names, specs, extra_args=''):
         specs = [specs]
     run('pip wheel -w {wheelhouse} {all_args} '
         '--no-binary {pkg_names} {specs}'.format(
-            wheelhouse=ENV['WHEELHOUSE'],
+            wheelhouse=WHEELHOUSE,
             all_args='{0} {1}'.format(WHEEL_SITE_ARGS, extra_args),
             pkg_names=','.join(names),
             specs=' '.join(specs)))
@@ -132,8 +135,11 @@ for pkg_spec, source in zip(pkg_specs, sources):
     elif pkg_name == 'pyside':
         apt_install('build-essential git cmake libqt4-dev libphonon-dev')
         apt_install('python2.7-dev libxml2-dev libxslt1-dev qtmobility-dev')
-        run('wget https://pypi.python.org/packages/source/P/PySide/PySide-1.2.2.tar.gz')
-        run('tar -xvzf PySide-1.2.2.tar.gz')
+        pyside_root = 'PySide-{0}'.format(PYSIDE_VERSION)
+        pyside_archive = pyside_root + '.tar.gz'
+        run('wget https://pypi.python.org/packages/source/P/PySide/' +
+            pyside_archive)
+        run('tar -xvzf ' + pyside_archive)
 
     ##########################
     # Next build package wheel
@@ -155,7 +161,7 @@ for pkg_spec, source in zip(pkg_specs, sources):
             link = link % (ver, 'cp%sm' % ver)
         else:
             continue
-        run('wget %s -P %s' % (link, ENV['WHEELHOUSE']))
+        run('wget %s -P %s' % (link, WHEELHOUSE))
 
     elif pkg_name == 'pil':
         pipw(pkg_name, source,
@@ -163,7 +169,9 @@ for pkg_spec, source in zip(pkg_specs, sources):
 
     elif pkg_name == 'pyside':
         # patch for Py35 compatibility
-        run("cd PySide-1.2.2 && sed -i 's/subprocess.mswindows/False/g' popenasync.py")
-        run('cd PySide-1.2.2 && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 -d %s' % ENV['WHEELHOUSE'])
+        run("cd {0} && sed -i 's/subprocess.mswindows/False/g' popenasync.py"
+            .format(pyside_root))
+        run('cd {0} && python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 '
+            '-d {1}'.format(pyside_root, WHEELHOUSE))
     else:
         pipw(pkg_name, source)
